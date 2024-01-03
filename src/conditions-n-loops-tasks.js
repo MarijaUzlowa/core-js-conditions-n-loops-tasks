@@ -119,10 +119,42 @@ function isIsoscelesTriangle(a, b, c) {
  *  10  => X
  *  26  => XXVI
  */
-function convertToRomanNumerals(/* num */) {
-  throw new Error('Not implemented');
-}
+function convertToRomanNumerals(num) {
+  let result = '';
+  let remainingNum = num;
 
+  const addSymbol = (symbol, value) => {
+    result += symbol;
+    remainingNum -= value;
+  };
+
+  const repeatSymbol = (symbol, times) => {
+    let repeated = '';
+    for (let i = 0; i < times; i += 1) {
+      repeated += symbol;
+    }
+    return repeated;
+  };
+
+  if (remainingNum >= 10) {
+    const tens = Math.floor(remainingNum / 10);
+    addSymbol(repeatSymbol('X', tens), tens * 10);
+  }
+
+  if (remainingNum === 9) {
+    addSymbol('IX', 9);
+  } else if (remainingNum >= 5) {
+    addSymbol('V', 5);
+  }
+
+  if (remainingNum === 4) {
+    addSymbol('IV', 4);
+  } else if (remainingNum > 0) {
+    addSymbol(repeatSymbol('I', remainingNum), remainingNum);
+  }
+
+  return result;
+}
 /**
  * Converts a number to a string, replacing digits with words.
  * In this task, the use of methods of the String and Array classes is not allowed.
@@ -138,8 +170,32 @@ function convertToRomanNumerals(/* num */) {
  *  '10,5'    => 'one zero point five'
  *  '1950.2'  => 'one nine five zero point two'
  */
-function convertNumberToString(/* numberStr */) {
-  throw new Error('Not implemented');
+function convertNumberToString(numberStr) {
+  const wordMapping = 'zero one two three four five six seven eight nine';
+  const words = wordMapping.split(' ');
+  const resultArray = [];
+
+  for (let i = 0; i < numberStr.length; i += 1) {
+    const char = numberStr[i];
+    let digit;
+    switch (char) {
+      case '-':
+        resultArray.push('minus');
+        break;
+      case '.':
+        resultArray.push('point');
+        break;
+      case ',':
+        resultArray.push('point');
+        break;
+      default:
+        digit = Number(char);
+        resultArray.push(words[digit]);
+        break;
+    }
+  }
+
+  return resultArray.join(' ');
 }
 
 /**
@@ -154,8 +210,17 @@ function convertNumberToString(/* numberStr */) {
  *  '0123210'   => true
  *  'qweqwe'    => false
  */
-function isPalindrome(/* str */) {
-  throw new Error('Not implemented');
+function isPalindrome(str) {
+  const cleanStr = str.replace(/[^a-zA-Z0-9]/g, '').toLowerCase();
+  const len = cleanStr.length;
+
+  for (let i = 0; i < Math.floor(len / 2); i += 1) {
+    if (cleanStr[i] !== cleanStr[len - 1 - i]) {
+      return false;
+    }
+  }
+
+  return true;
 }
 
 /**
