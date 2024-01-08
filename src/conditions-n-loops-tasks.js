@@ -392,26 +392,14 @@ function getSpiralMatrix(size) {
  *  ]                 ]
  */
 function rotateMatrix(matrix) {
-  const n = matrix.length;
-  const rotatedMatrix = [];
+  const initMatrix = JSON.parse(JSON.stringify(matrix));
+  const rotMatrix = matrix;
 
-  // Initialize the rotated matrix
-  for (let i = 0; i < n; i += 1) {
-    rotatedMatrix.push(Array(n).fill(0));
-  }
-
-  // Transpose the matrix
-  for (let i = 0; i < n; i += 1) {
-    for (let j = 0; j < n; j += 1) {
-      rotatedMatrix[j][i] = matrix[i][j];
+  for (let i = 0; i < matrix.length; i += 1) {
+    for (let j = matrix.length - 1, k = 0; j >= 0; j -= 1, k += 1) {
+      rotMatrix[i][k] = initMatrix[j][i];
     }
   }
-
-  for (let i = 0; i < n; i += 1) {
-    rotatedMatrix[i].reverse();
-  }
-
-  return rotatedMatrix;
 }
 
 /**
