@@ -211,16 +211,16 @@ function convertNumberToString(numberStr) {
  *  'qweqwe'    => false
  */
 function isPalindrome(str) {
-  const cleanStr = str.replace(/[^a-zA-Z0-9]/g, '').toLowerCase();
-  const len = cleanStr.length;
-
-  for (let i = 0; i < Math.floor(len / 2); i += 1) {
-    if (cleanStr[i] !== cleanStr[len - 1 - i]) {
+  const cleanStr = (first = 0, last = str.length - 1) => {
+    if (first >= last) {
+      return true;
+    }
+    if (str[first] !== str[last]) {
       return false;
     }
-  }
-
-  return true;
+    return cleanStr(first + 1, last - 1);
+  };
+  return cleanStr();
 }
 
 /**
