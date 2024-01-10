@@ -336,44 +336,24 @@ function getBalanceIndex(arr) {
  *        ]
  */
 function getSpiralMatrix(size) {
-  const matrix = new Array(size);
-  for (let i = 0; i < size; i += 1) {
-    matrix[i] = new Array(size);
+  const arr = [];
+  let [x, y, steps] = [0, 0, size - 1];
+
+  for (let i = 0; i < size; i += 1) arr[i] = [];
+
+  for (let i = 1; i <= size * size; i += 1) {
+    arr[y][x] = i;
+
+    if (x === size - steps - 1 && y === steps) steps -= 1;
+
+    if ((x >= y && x < steps) || (y === size - steps - 1 && x === y - 1))
+      x += 1;
+    else if (y <= x && y < steps) y += 1;
+    else if (x <= y && x >= size - steps) x -= 1;
+    else if (y >= x && y >= size - steps) y -= 1;
   }
 
-  let num = 1;
-  let topRow = 0;
-  let bottomRow = size - 1;
-  let leftCol = 0;
-  let rightCol = size - 1;
-
-  while (topRow <= bottomRow && leftCol <= rightCol) {
-    for (let i = leftCol; i <= rightCol; i += 1) {
-      matrix[topRow][i] = num + 1;
-      num += 1;
-    }
-    topRow += 1;
-
-    for (let i = topRow; i <= bottomRow; i += 1) {
-      matrix[i][rightCol] = num + 1;
-      num += 1;
-    }
-    rightCol -= 1;
-
-    for (let i = rightCol; i >= leftCol; i -= 1) {
-      matrix[bottomRow][i] = num + 1;
-      num += 1;
-    }
-    bottomRow -= 1;
-
-    for (let i = bottomRow; i >= topRow; i -= 1) {
-      matrix[i][leftCol] = num + 1;
-      num += 1;
-    }
-    leftCol += 1;
-  }
-
-  return matrix;
+  return arr;
 }
 
 /**
