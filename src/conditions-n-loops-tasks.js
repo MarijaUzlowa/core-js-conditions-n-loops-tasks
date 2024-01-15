@@ -495,35 +495,35 @@ function shuffleChar(str, iterations) {
  * @returns {number} The nearest larger number, or original number if none exists.
  */
 function getNearestBigger(number) {
-  // Step 1: Convert the number to an array of digits
-  const digits = Array.from(String(number), Number);
-
-  // Step 2: Find the rightmost smaller digit
-  let i = digits.length - 2;
-  while (i >= 0 && digits[i] >= digits[i + 1]) {
-    i -= 1;
+  let origin = number;
+  let temp = number;
+  let stand = 0;
+  const res = [];
+  for (let i = 0; temp > 1; i += 1) {
+    stand += 1;
+    temp /= 10;
   }
-
-  // Step 3: If a smaller digit is found, swap it with the smallest larger digit to its right
-  if (i >= 0) {
-    let j = digits.length - 1;
-    while (digits[j] <= digits[i]) {
-      j -= 1;
-    }
-    [digits[i], digits[j]] = [digits[j], digits[i]];
+  for (let i = 0; i < stand; i += 1) {
+    res[stand - i - 1] = Math.floor(origin % 10);
+    origin /= 10;
   }
-
-  // Step 4: Sort the digits to the right of the swapped digit
-  const sortedDigits = digits.slice(i + 1).sort((a, b) => a - b);
-
-  // Step 5: Convert the modified array back to a number
-  const result = parseInt(
-    [...digits.slice(0, i + 1), ...sortedDigits].join(''),
-    10
-  );
-
-  // Return the result
-  return result > number ? result : number;
+  let i = res.length - 1;
+  while (i > 0 && res[i - 1] >= res[i]) i -= 1;
+  if (i <= 0) return false;
+  let j = res.length - 1;
+  while (res[j] <= res[i - 1]) j -= 1;
+  let ex = res[i - 1];
+  res[i - 1] = res[j];
+  res[j] = ex;
+  j = res.length - 1;
+  while (i < j) {
+    ex = res[i];
+    res[i] = res[j];
+    res[j] = ex;
+    i += 1;
+    j -= 1;
+  }
+  return Number(res.join(''));
 }
 
 module.exports = {
