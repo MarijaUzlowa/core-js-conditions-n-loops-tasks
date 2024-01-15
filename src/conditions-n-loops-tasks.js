@@ -171,31 +171,52 @@ function convertToRomanNumerals(num) {
  *  '1950.2'  => 'one nine five zero point two'
  */
 function convertNumberToString(numberStr) {
-  const wordMapping = 'zero one two three four five six seven eight nine';
-  const words = wordMapping.split(' ');
-  const resultArray = [];
+  let string = '';
 
   for (let i = 0; i < numberStr.length; i += 1) {
-    const char = numberStr[i];
-    let digit;
-    switch (char) {
+    switch (numberStr[i]) {
       case '-':
-        resultArray.push('minus');
+        string += 'minus ';
+        break;
+      case '0':
+        string += i === numberStr.length - 1 ? 'zero' : 'zero ';
+        break;
+      case '1':
+        string += i === numberStr.length - 1 ? 'one' : 'one ';
+        break;
+      case '2':
+        string += i === numberStr.length - 1 ? 'two' : 'two ';
+        break;
+      case '3':
+        string += i === numberStr.length - 1 ? 'three' : 'three ';
+        break;
+      case '4':
+        string += i === numberStr.length - 1 ? 'four' : 'four ';
+        break;
+      case '5':
+        string += i === numberStr.length - 1 ? 'five' : 'five ';
+        break;
+      case '6':
+        string += i === numberStr.length - 1 ? 'six' : 'six ';
+        break;
+      case '7':
+        string += i === numberStr.length - 1 ? 'seven' : 'seven ';
+        break;
+      case '8':
+        string += i === numberStr.length - 1 ? 'eight' : 'eight ';
+        break;
+      case '9':
+        string += i === numberStr.length - 1 ? 'nine' : 'nine ';
         break;
       case '.':
-        resultArray.push('point');
-        break;
       case ',':
-        resultArray.push('point');
+        string += 'point ';
         break;
       default:
-        digit = Number(char);
-        resultArray.push(words[digit]);
-        break;
+        string = '';
     }
   }
-
-  return resultArray.join(' ');
+  return string;
 }
 
 /**
